@@ -15,11 +15,12 @@ Requirements
 ------------
 Requires Kafka_broker_id and zookeeper_id values in host inventory
 
+```
 [kafkaservers]
 10.0.15.22 kafka_broker_id=1 zookeeper_id=1
 10.0.15.23 kafka_broker_id=2 zookeeper_id=2
 10.0.15.15 kafka_broker_id=3 zookeeper_id=3
-
+```
 
 Role Variables
 --------------
@@ -33,9 +34,10 @@ Assumes JAVA is already installed on all systems in cluster.
 
 How to install or uninstall apache kafka
 ----------------------------------------
+```
 deploy_kafka.sh --> deploys kafka & zookeeper in all servers in kafkaservers group from inventory file
 undeploy_kafka.sh --> undeploys kafka & zookeeper in all servers in kafkaservers group from inventory file
-
+```
 
 License
 -------
