@@ -1,0 +1,131 @@
+  - name: create kafka group
+    group:
+        name: "{{ user.groupname }}"
+        gid: "{{ user.gid }}"
+        state: present
+
+  - name: Create kafka user
+    user:
+        name: "{{ user.username }}"
+        uid: "{{ user.uid }}"
+        home: "{{ user.home }}"
+        shell: "{{ user.shell }}"
+        group: "{{ user.groupname }}"
+        state: present
+
+  - name: create directory "{{zookeeper.dataDir}}" and "{{kafka.data}}"
+    file:
+         path: "{{item}}"
+         owner: "{{ user.username }}"
+         group: "{{ user.groupname }}"
+         mode: 0755
+         state: directory
+    with_items:
+         - "{{USER_HOME}}"
+         - "{{USER_HOME}}/data"
+         - "{{zookeeper.dataDir}}"
+         - "{{kafka.data}}"
+       
+  - name: Untar kafka
+    unarchive:
+      src: "kafka_{{kafka.apacheversion}}.tgz"
+      dest: "{{USER_HOME}}"
+      creates: "{{USER_HOME}}/kafka_{{kafka.apacheversion}}"
+      owner: "{{user.username}}" 
+      group: "{{user.groupname}}"
+      mode: 0755
+
+  - name: Create soft link
+    file:
+      src: "{{USER_HOME}}/kafka_{{kafka.apacheversion}}"
+      dest: "{{USER_HOME}}/kafka"
+      owner: "{{user.username}}" 
+      group: "{{user.groupname}}" 
+      state: link
+
+  - name: creating zookeeper and server properties file
+    template:
+      src: "{{item.0}}"
+      dest: "{{item.1}}"
+      owner: "{{user.username}}"
+      group: "{{user.groupname}}"
+      mode: 0744
+      backup: yes
+    with_together:
+      - "{{properties.templates}}"
+      - "{{properties.files}}"
+      
+  - name: creating zookeeper id "{{zookeeper_id}}"
+    copy:
+      content: "{{zookeeper_id}}"
+      dest: "{{zookeeper.dataDir}}/myid"
+      owner: "{{user.username}}"
+      group: "{{user.groupname}}"
+      
+  - name: Creates service for kafka-broker kafka-zookeeper 
+    template:
+      src: "{{item.0}}"
+      dest: "{{item.1}}"
+    with_together:
+       - "{{services.templates}}"
+       - "{{services.files}}"
+       
+  - name: systemctl daemon-reload
+    become: yes
+    become_user: root
+    command: systemctl daemon-reload
+
+  - name: Enable service kafka-broker.service kafka-zookeeper.service
+    service: 
+      name: "{{item}}" 
+      enabled: yes
+    with_items:
+      - kafka-broker.service
+      - kafka-zookeeper.service
+
+  - name: ensure Kafka broker and zookeeper stopped
+    service:
+      name: "{{item}}"
+      state: stopped
+    with_items:
+       - kafka-broker
+       - kafka-zookeeper
+    tags:
+     - uninstall
+      
+  - name: cleaning up Kafka
+    file:
+      state: absent
+      path: "{{item}}"
+    with_items:
+      - "{{kafka_dir}}"
+      - "{{USER_HOME}}/kafka-{{kafka.apacheversion}}"
+      - "{{USER_HOME}}/kafka_{{kafka.apacheversion}}"
+      - /etc/systemd/system/kafka-broker.service
+      - /etc/systemd/system/kafka-zookeeper.service
+      - "{{kafka.data}}"
+      - "{{zookeeper.dataDir}}"
+      - "{{USER_HOME}}/data"
+    tags:
+      - uninstall
+
+  - name: Remove kafka user
+    user:
+        name: "{{ user.username }}"
+        uid: "{{ user.uid }}"
+        home: "{{ user.home }}"
+        shell: "{{ user.shell }}"
+        group: "{{ user.groupname }}"
+        state: absent
+    tags:
+      - uninstall
+      
+  - name: Remove kafka group
+    group:
+        name: "{{ user.groupname }}"
+        gid: "{{ user.gid }}"
+        state: absent
+    tags:
+      - uninstall
+
+ 

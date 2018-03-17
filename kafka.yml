@@ -1,0 +1,11 @@
+--- # Master Playbook for KAFKA
+
+ - hosts: "all" 
+   become: yes
+   connection: ssh
+   gather_facts: yes
+   roles:
+     - kafka 
+   serial: 1
+
+
