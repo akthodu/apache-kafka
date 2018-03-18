@@ -1,5 +1,6 @@
 ---
-- hosts: kafkaservers 
+- hosts: kafkaservers
+  become: yes
   remote_user: root
   connection: local
   roles:
