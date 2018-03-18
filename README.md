@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/akthodu/apache-kafka.svg?branch=master)](https://travis-ci.org/akthodu/apache-kafka)
+
 Role Name
 =========
 Install apache Kafka and configures kafka and zookeeper cluster
