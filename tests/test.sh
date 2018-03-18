@@ -7,7 +7,7 @@ cd ${FULL_PATH}
 # -----------------------------------------------------------------------------
 
 ansible-playbook -i inventory test.yml  --skip-tags "uninstall"
-systemctl start kafka-zookeeper
+sudo systemctl start kafka-zookeeper
 THRESHOLD_START_TIME=60
 START_TIME=$(date +%s)
 while true
@@ -27,7 +27,7 @@ do
                         fi
         fi
 done
-systemctl start kafka-broker
+sudo systemctl start kafka-broker
 while true
 do
         CHECK_TIME=$(date +%s)

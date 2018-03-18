@@ -32,6 +32,6 @@ script:
   - cd  tests; ansible-playbook -i inventory test.yml --syntax-check
 
   # Run the role/playbook with ansible-playbook.
-  - ls -ltr ;./test.sh
+  - ls -ltr ; bash -x ./test.sh
 
   
