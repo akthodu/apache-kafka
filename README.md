@@ -1,7 +1,7 @@
 Role Name
 =========
 Install apache Kafka and configures kafka and zookeeper cluster
-
+```
 Creates application user and group
 Creates required directories for kafka broker and zookeeper
 Configures properties requried for kafka and zookeeper and creates systemd services.
@@ -10,6 +10,7 @@ Enables JMX on kafka broker.
 Heap sizes are set by env  files
 kafka.env --> sets heap for kafka broker
 zookeeper.env --> sets heap for zookeeper
+```
 
 Requirements
 ------------

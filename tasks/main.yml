@@ -83,6 +83,17 @@
       - kafka-broker.service
       - kafka-zookeeper.service
 
+  - name: ensure Kafka broker and zookeeper started
+    service:
+      name: "{{item}}"
+      state: started
+    with_items:
+       - kafka-zookeeper
+       - kafka-broker
+       
+    tags:
+     - uninstall
+
   - name: ensure Kafka broker and zookeeper stopped
     service:
       name: "{{item}}"

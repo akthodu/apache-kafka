@@ -5,7 +5,7 @@
    connection: ssh
    gather_facts: yes
    roles:
-     - kafka 
+     - apache-kafka 
    serial: 1
 
 
