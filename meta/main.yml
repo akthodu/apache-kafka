@@ -1,7 +1,7 @@
 galaxy_info: 
   author: akthodu
   company: "your company (optional)"
-  description: "Apache Kafka  broker and zookeeper cluser install"
+  description: "Apache Kafka  broker and zookeeper cluster install"
   license: "license (GPLv2, CC-BY, etc)"
   min_ansible_version: 1.2
   platforms: 
