@@ -4,4 +4,4 @@
   remote_user: root
   connection: local
   roles:
-    - apache-kafka
+    - ../../apache-kafka
