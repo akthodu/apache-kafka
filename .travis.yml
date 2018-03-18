@@ -39,9 +39,9 @@ install:
 
 script:
   # Check the role/playbook's syntax.
-  - cd  tests; ansible-playbook -i tests/inventory tests/test.yml --syntax-check
+  - cd  tests; ansible-playbook -i inventory test.yml --syntax-check
 
   # Run the role/playbook with ansible-playbook.
-  - cd tests;./test.sh
+  - ls;./test.sh
 
   
