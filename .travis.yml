@@ -31,6 +31,7 @@ branches:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install nmap
+  - - chmod +x 
 
 install:
   # Install Ansible.
@@ -39,9 +40,12 @@ install:
 
 script:
   # Check the role/playbook's syntax.
+  - pwd 
+  - ANSIBLE_ROLES_PATH=$(dirname $CURR_PWD)
+  - echo $ANSIBLE_ROLES_PATH is ANSIBLE_ROLES_PATH
   - cd  tests; ansible-playbook -i inventory test.yml --syntax-check
 
   # Run the role/playbook with ansible-playbook.
-  - ls;./test.sh
+  - ls -ltr ;./test.sh
 
   
