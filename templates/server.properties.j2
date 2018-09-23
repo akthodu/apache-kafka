@@ -68,6 +68,9 @@ num.partitions={{kafka.num_partitions}}
 # The number of threads per data directory to be used for log recovery at startup and flushing at shutdown.
 # This value is recommended to be increased for installations with data dirs located in RAID array.
 num.recovery.threads.per.data.dir={{kafka.num_recovery_threads_per_data_dir}}
+min.insync.replicas={{kafka.min_insync_repicas}}
+default.replication.factor={{kafka.default_replication_factor}}
+
 
 ############################# Internal Topic Settings  #############################
 # The replication factor for the group metadata internal topics "__consumer_offsets" and "__transaction_state"

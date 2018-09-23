@@ -42,7 +42,7 @@ kafka:
   log_dirs: "{{USER_HOME}}/data/kafka"
   num_partitions: 3 
   num_recovery_threads_per_data_dir: 1
-  offsets_topic_replication_factor: 1
+  offsets_topic_replication_factor: 3
   transaction_state_log_replication_factor: 1
   transaction_state_log_min_isr: 1
   log_retention_hours: 168
@@ -57,6 +57,8 @@ kafka:
   heapmax: 2g
   heapmin: 1g
   jmx_port: 9096
+  min_insync_repicas: 2
+  default_replication_factor: 3
   
 
 properties:
